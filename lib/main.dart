@@ -1,5 +1,8 @@
+import 'package:catalog_store/pages/home_page.dart';
+import 'package:catalog_store/pages/login_page.dart';
+import 'package:catalog_store/utils/routes.dart';
+import 'package:catalog_store/widgets/theme.dart';
 import 'package:flutter/material.dart';
-
 void main() {
   runApp(const MyApp());
 }
@@ -10,13 +13,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Material(
-        child: Center(
-          child: Container(
-            child: Text("Welcome to Catalog App Store!"),
-          ),
-        ),
-      ),
+      themeMode: ThemeMode.light,
+      theme: MyTheme.lightTheme(context),
+      darkTheme: MyTheme.darkTheme(context),
+      debugShowCheckedModeBanner: false,
+      initialRoute: "/",
+      routes: {
+        "/": (context) => LoginPage(),
+        MyRoutes.homeRoute: (context) => HomePage(),
+        MyRoutes.loginRoute: (context) => LoginPage(),
+      },
     );
   }
 }
