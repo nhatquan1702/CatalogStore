@@ -1,6 +1,7 @@
 import 'package:catalog_store/utils/routes.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
+import 'package:velocity_x/velocity_x.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -30,7 +31,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.white,
+      color: context.canvasColor,
       child: SingleChildScrollView(
         child: Form(
           key: _formKey,
@@ -39,12 +40,14 @@ class _LoginPageState extends State<LoginPage> {
               Image.asset("assets/hey.png",
               fit: BoxFit.cover,),
               SizedBox(height: 20,),
-              Text(
-                "Welcome $name",
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-
+              Padding(
+                padding: EdgeInsets.all(16),
+                child: Text(
+                  "Welcome $name",
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
               SizedBox(height: 20,),
@@ -97,7 +100,7 @@ class _LoginPageState extends State<LoginPage> {
                     // ),
                     //animation button custom
                     Material(
-                      color: Colors.deepPurple,
+                      color: context.accentColor,
                       borderRadius: BorderRadius.circular(changeButton ? 50 : 8),
                       child: InkWell(
                         onTap: () => moveToHome(context),
@@ -106,10 +109,10 @@ class _LoginPageState extends State<LoginPage> {
                           height: 50,
                           width: changeButton ? 50 : 150,
                           alignment: Alignment.center,
-                          child: changeButton ? Icon(Icons.done, color: Colors.white,) : Text(
+                          child: changeButton ? Icon(Icons.done, color: context.cardColor,) : Text(
                             "Login",
                             style: TextStyle(
-                              color: Colors.white,
+                              color: context.cardColor,
                               fontWeight: FontWeight.bold,
                               fontSize: 18,
                             ),

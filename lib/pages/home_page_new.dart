@@ -1,12 +1,14 @@
 import 'dart:convert';
-import 'package:catalog_store/widgets/drawer.dart';
-import 'package:catalog_store/widgets/item_widget.dart';
-import 'package:catalog_store/widgets/item_widget_gridview.dart';
+import 'package:catalog_store/utils/routes.dart';
 import 'package:catalog_store/widgets/theme.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../models/catalog.dart';
 import 'package:velocity_x/velocity_x.dart';
+
+import '../widgets/home_widget/catalog_haeader.dart';
+import '../widgets/home_widget/catalog_list.dart';
 
 
 class HomePageNew extends StatefulWidget {
@@ -15,6 +17,8 @@ class HomePageNew extends StatefulWidget {
 }
 
 class _HomePageNewState extends State<HomePageNew> {
+  bool _isGridMode = false;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -24,7 +28,35 @@ class _HomePageNewState extends State<HomePageNew> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: MyTheme.creamColor,
+      backgroundColor: context.canvasColor,
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: context.theme.accentColor,
+        onPressed: () => Navigator.pushNamed(context, MyRoutes.cartRoute),
+        child: Icon(CupertinoIcons.shopping_cart, color: context.cardColor,),
+      ),
+      // appBar: AppBar(
+      //   title: const Text("Catalog Store", style: TextStyle(color: Colors.black),),
+      //   actions: <Widget>[
+      //     if (_isGridMode)
+      //       IconButton(
+      //         icon: const Icon(Icons.grid_on),
+      //         onPressed: () {
+      //           setState(() {
+      //             _isGridMode = false;
+      //           });
+      //         },
+      //       )
+      //     else
+      //       IconButton(
+      //         icon: const Icon(Icons.list),
+      //         onPressed: () {
+      //           setState(() {
+      //             _isGridMode = true;
+      //           });
+      //         },
+      //       ),
+      //   ],
+      // ),
       body: SafeArea(
         child: Container(
           padding: Vx.m32,
@@ -33,9 +65,9 @@ class _HomePageNewState extends State<HomePageNew> {
             children: [
               CatalogHeader(),
               if(CatalogModel.items != null && CatalogModel.items!.isNotEmpty)
-                CatalogList().expand()
+                CatalogList().py16().expand()
               else
-                Center(child: CircularProgressIndicator(),),
+                CircularProgressIndicator().centered().py16().expand()
             ],
           ),
         ),
@@ -53,52 +85,14 @@ class _HomePageNewState extends State<HomePageNew> {
   }
 }
 
-class CatalogList extends StatelessWidget {
-  const CatalogList({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-      shrinkWrap: true,
-      itemCount: CatalogModel.items!.length,
-      itemBuilder: (context, indiex){
-        final catalog = CatalogModel.items![indiex];
-        return CatalogItem(catalog: catalog);
-      },
-    );
-  }
-}
-
-class CatalogItem extends StatelessWidget {
-  final Item catalog;
-  const CatalogItem({required this.catalog})
-      : assert(catalog != null);
-  @override
-  Widget build(BuildContext context) {
-    return VxBox(
-      child: Row(
-        children: [
-          Image.network(catalog.image)
-        ],
-      )
-    ).white.square(100).make();
-  }
-  //cc
-}
 
 
-class CatalogHeader extends StatelessWidget {
-  const CatalogHeader({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        "Catalog Store".text.xl5.bold.color(MyTheme.darkBluishColor).make(),
-        "Trending products".text.xl2.make(),
-      ],
-    );
-  }
-}
+
+
+
+
+
+
+
 
